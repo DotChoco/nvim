@@ -1,5 +1,22 @@
 return {
 	'nvim-tree/nvim-tree.lua',
+	cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFile" },
+	keys = {
+		{
+			"<C-n>",
+			function()
+				require("nvim-tree.api").tree.toggle()
+			end,
+			desc = "Toggle nvim-tree",
+		},
+		{
+			"<Space>e",
+			function()
+				require("nvim-tree.api").tree.open()
+			end,
+			desc = "Open nvim-tree",
+		},
+	},
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 	},

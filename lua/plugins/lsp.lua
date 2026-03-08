@@ -1,7 +1,22 @@
 return {
-  'neovim/nvim-lspconfig',
-  dependencies = { 'saghen/blink.cmp' },
+  "neovim/nvim-lspconfig",
+  ft = {
+    "c",
+    "cpp",
+    "objc",
+    "objcpp",
+    "cuda",
+    "cs",
+    "lua",
+    "gd",
+    "gdscript",
+    "gdscript3",
+    "rust",
+  },
+  dependencies = {
+    "saghen/blink.cmp",
+  },
   config = function()
-    require "lsp.init"
+    require("lsp").setup()
   end,
 }

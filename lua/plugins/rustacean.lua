@@ -2,7 +2,7 @@
 return {
   'mrcjkb/rustaceanvim',
   version = '^5',
-  lazy = false,
+  ft = { "rust" },
   init = function()
     -- NOTE: rustaceanvim's default `server.auto_attach` checks for "absolute" file paths.
     -- On some Windows builds (e.g. MSYS2/MinGW, where `vim.uv.os_uname().sysname` is like
@@ -31,7 +31,23 @@ return {
               typeHints = { enable = true },
             },
             cargo = {
-              allFeatures = true,
+              allFeatures = false,
+            },
+            check = {
+              allTargets = false,
+            },
+            cachePriming = {
+              enable = false,
+            },
+            lru = {
+              capacity = 1024,
+            },
+            files = {
+              excludeDirs = {
+                ".git",
+                "target",
+                "node_modules",
+              },
             },
           },
         },

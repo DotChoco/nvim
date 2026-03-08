@@ -24,8 +24,9 @@ vim.opt.rtp:prepend(lazypath)
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function()
-    -- Elimina espacios en blanco al final de las líneas
+    local view = vim.fn.winsaveview()
     vim.cmd([[%s/\s\+$//e]])
+    vim.fn.winrestview(view)
   end,
 })
 
@@ -51,14 +52,9 @@ require("lazy").setup({
   -- install = { colorscheme = { "kanagawa" } },
   install = { colorscheme = { theme } },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  checker = { enabled = false },
 })
 
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd(csc .. theme )
-
-
--- LSP Config
-require("mason").setup()
-require("lsp")
+pcall(vim.cmd, csc .. theme)
 
