@@ -5,8 +5,12 @@ local initialized = false
 local servers = {
   csharp_ls = { module = "lsp.csharp" },
   clangd = { module = "lsp.clangd" },
+  cssls = { module = "lsp.css" },
   lua_ls = { module = "lsp.lua_lsp" },
   gdscript = { module = "lsp.gdscript" },
+  html = { module = "lsp.html" },
+  svelte = { module = "lsp.svlt" },
+  ts_ls = { module = "lsp.ts" },
 }
 
 local managed_server_names = {}

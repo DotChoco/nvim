@@ -13,6 +13,13 @@ return {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
-    opts = {},
+    opts = {
+      ensure_installed = {
+        "cssls",
+        "html",
+        "svelte",
+        "ts_ls",
+      },
+    },
   },
 }
