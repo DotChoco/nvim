@@ -37,8 +37,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
--- theme = "kanagawa"
-theme = "zenwritten"
+theme = "zenwritten" --light
+-- theme = "zenbones" --dark
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -55,6 +55,5 @@ require("lazy").setup({
   checker = { enabled = false },
 })
 
-vim.o.background = "dark" -- or "light" for light mode
+vim.o.background = "dark" -- or "dark" for dark mode
 pcall(vim.cmd, csc .. theme)
-
