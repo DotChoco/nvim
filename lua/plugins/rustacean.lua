@@ -64,4 +64,51 @@ return {
       end,
     })
   end,
+  config = function()
+    local ok, compat = pcall(require, "rustaceanvim.compat")
+    if not ok then
+      return
+    end
+
+    local function get_attached_buffers(client_id)
+      local client = vim.lsp.get_client_by_id(client_id)
+      if not client or type(client.attached_buffers) ~= "table" then
+        return {}
+      end
+
+      local bufs = {}
+      for bufnr, attached in pairs(client.attached_buffers) do
+        if attached and vim.api.nvim_buf_is_valid(bufnr) then
+          table.insert(bufs, bufnr)
+        end
+      end
+      return bufs
+    end
+
+    compat.client_request = function(client, method, params, handler, bufnr)
+      return client:request(method, params, handler, bufnr)
+    end
+
+    compat.client_notify = function(client, method, params)
+      return client:notify(method, params)
+    end
+
+    compat.client_is_stopped = function(client)
+      return client:is_stopped()
+    end
+
+    local status_ok, server_status = pcall(require, "rustaceanvim.server_status")
+    if status_ok and type(server_status.handler) == "function" then
+      local original_handler = server_status.handler
+      server_status.handler = function(err, result, ctx, cfg)
+        local original_get_buffers = vim.lsp.get_buffers_by_client_id
+        vim.lsp.get_buffers_by_client_id = get_attached_buffers
+        local ok_handler, handler_err = pcall(original_handler, err, result, ctx, cfg)
+        vim.lsp.get_buffers_by_client_id = original_get_buffers
+        if not ok_handler then
+          error(handler_err)
+        end
+      end
+    end
+  end,
 }
